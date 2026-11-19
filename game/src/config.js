@@ -1,61 +1,49 @@
-// Every tuning number and colour in one place. The playfield is a fixed 1280x720 logical area;
-// the renderer scales it to the window, so no rule below depends on the screen size.
+// Neon Harbor: Port Solano — shared tuning constants for the whole game.
+// Every module reads its numbers from here so the city size, road layout and
+// difficulty stay in one place.
 
-export const FIELD = { width: 1280, height: 720, groundY: 664 };
-
-/** The simulation's fixed step, in seconds: 60 updates a second whatever the display's rate. */
+export const GAME_TITLE = 'Neon Harbor: Port Solano';
 export const STEP = 1 / 60;
+export const SAVE_KEY = 'neon-harbor-port-solano-save-v1';
 
-export const PLAYER = {
-  width: 72,
-  height: 24,
-  speed: 560,
-  invulnerable: 1.5,
-};
+// City layout: a grid of avenues and streets over a pitch, with a beach and
+// the sea along the south edge.
+export const ROAD_PITCH = 320;
+export const ROAD_HALF = 46;
+export const ROAD_COLS = 6;
+export const ROAD_ROWS = 5;
+export const CITY_MARGIN = 200;
+export const BEACH_Y = 1700;
+export const WATER_Y = 1850;
+export const WORLD_WIDTH = CITY_MARGIN * 2 + (ROAD_COLS - 1) * ROAD_PITCH;
+export const WORLD_HEIGHT = 2120;
 
-export const LIVES = 3;
+// Player tuning.
+export const PLAYER_RADIUS = 11;
+export const PLAYER_WALK_SPEED = 175;
+export const PLAYER_SPRINT_SPEED = 295;
+export const PLAYER_MAX_HEALTH = 100;
+export const PUNCH_RANGE = 34;
+export const ENTER_CAR_RANGE = 52;
 
-export const BLOCK = {
-  minWidth: 40,
-  maxWidth: 110,
-  height: 36,
-  speed: 240,
-  speedPerLevel: 30,
-  speedJitter: 90,
-  interval: 0.55,
-  intervalScale: 0.88,
-  minInterval: 0.14,
-  dodgePoints: 1,
-};
+// Wanted tuning: heat is a float 0..5, stars shown are ceil(heat).
+export const MAX_HEAT = 5;
+export const HEAT_DECAY_PER_SECOND = 0.055;
+export const HEAT_SIGHT_RANGE = 380;
+export const BUST_SECONDS = 2.2;
 
-export const COIN = {
-  size: 24,
-  speed: 190,
-  speedPerLevel: 14,
-  interval: 1.4,
-  intervalJitter: 0.8,
-  points: 10,
-};
+// Camera and view.
+export const CAMERA_LERP = 5.5;
+export const DAY_CYCLE_SECONDS = 240;
 
-/** Seconds of play per level, and the last level: speeds and spawn rates stop growing there. */
-export const LEVEL = { seconds: 12, max: 12 };
-
-/** How many falling things can exist at once; the pool is allocated once, at boot. */
-export const POOL_SIZE = 64;
-
+// Colours of the sun-soaked neon coast.
 export const PALETTE = {
-  backdrop: '#11141b',
-  sky: '#1b1f2a',
-  ground: '#2a3040',
-  player: '#4fc3f7',
-  block: '#e5534b',
-  coin: '#f2c94c',
-  panel: '#252b38',
-  text: '#eef1f5',
-  muted: '#8b93a3',
+  asphalt: '#33373f',
+  asphaltEdge: '#2b2f36',
+  sidewalk: '#b8ab98',
+  blockGround: '#8f9a7d',
+  sand: '#ecd28f',
+  water: '#1d7f9e',
+  waterDeep: '#146a8c',
+  grass: '#7fae6d',
 };
-
-export const FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif';
-
-/** Where the best score is kept between visits (this browser only). */
-export const BEST_KEY = 'block-dodger.best';
