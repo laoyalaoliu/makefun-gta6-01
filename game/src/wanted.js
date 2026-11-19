@@ -8,7 +8,7 @@ import { clamp, distance } from './random.js';
 import { POLICE_TYPE, createCar, findPoliceSpawn } from './vehicles.js';
 
 export const CRIMES = {
-  carjack: { heat: 1.0, label: 'Grand theft auto' },
+  carjack: { heat: 1.0, label: 'Vehicle theft' },
   hitCar: { heat: 0.35, label: 'Hit and run' },
   hitBuilding: { heat: 0.15, label: 'Property damage' },
   hitPedestrian: { heat: 2.0, label: 'Vehicular assault' },

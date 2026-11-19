@@ -64,7 +64,7 @@ function stageChase(game, updateGame) {
   coupe.angle = -Math.PI / 2;
   putPlayerInCar(game, coupe);
   game.wanted.heat = 4;
-  game.wanted.lastCrimeLabel = 'Grand theft auto';
+  game.wanted.lastCrimeLabel = 'Vehicle theft';
   const copA = addCop(game, avenue - 16, streetY(3) + 175, -Math.PI / 2);
   const copB = addCop(game, avenue + 20, streetY(3) + 300, -Math.PI / 2);
   const copC = addCop(game, avenue - 14, streetY(4) - 120, -Math.PI / 2);
