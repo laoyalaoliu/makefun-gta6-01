@@ -35,7 +35,6 @@ export function generateCity(rng) {
   const props = [];
 
   // Blocks sit in the cells between roads (and in the margin ring outside).
-  const cellEdgesX = [-40, ...avenues.map((x) => x + ROAD_HALF), 0];
   const cellsX = [];
   let prevRight = -60;
   for (const x of avenues) {
