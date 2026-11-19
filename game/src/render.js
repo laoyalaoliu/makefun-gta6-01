@@ -136,11 +136,29 @@ function drawBuildings(ctx, city, darkness) {
     ctx.fillRect(b.x, b.y, b.w, b.h);
     ctx.fillStyle = b.roof;
     ctx.fillRect(b.x + 7, b.y + 7, b.w - 14, b.h - 14);
-    // Rooftop details and a window-lit inner court.
+    // Rooftop details: parapet lines, skylights and plant boxes, placed by a
+    // hash of the building's position so every roof is stable and distinct.
+    const hash = Math.abs(Math.sin(b.x * 12.9898 + b.y * 78.233) * 43758.5453) % 1;
+    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(b.x + 13, b.y + 13, b.w - 26, b.h - 26);
     ctx.fillStyle = 'rgba(255,255,255,0.16)';
     ctx.fillRect(b.x + 14, b.y + 14, Math.max(8, b.w * 0.2), Math.max(8, b.h * 0.16));
     ctx.fillStyle = 'rgba(30,30,40,0.25)';
     ctx.fillRect(b.x + b.w - 30, b.y + b.h - 26, 14, 12);
+    ctx.fillStyle = 'rgba(255,255,255,0.13)';
+    const boxW = 12 + hash * 16;
+    ctx.fillRect(b.x + b.w * (0.3 + hash * 0.3), b.y + b.h * 0.34, boxW, boxW * 0.7);
+    ctx.fillRect(b.x + b.w * 0.16, b.y + b.h * (0.5 + hash * 0.2), 9, 9);
+    if (darkness > 0.3) {
+      // Windows glow as the light goes down.
+      ctx.fillStyle = `rgba(255, 214, 130, ${(darkness - 0.3) * 0.55})`;
+      for (let wy = b.y + 16; wy < b.y + b.h - 20; wy += 17) {
+        for (let wx = b.x + 16; wx < b.x + b.w - 20; wx += 19) {
+          if ((Math.sin(wx * 3.7 + wy * 9.1) % 1 + 1) % 1 > 0.45) ctx.fillRect(wx, wy, 6, 4);
+        }
+      }
+    }
     if (b.sign) {
       const signW = Math.min(b.w - 16, 22 + b.sign.length * 8.4);
       const signX = b.x + (b.w - signW) / 2;

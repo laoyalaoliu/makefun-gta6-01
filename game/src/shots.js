@@ -56,7 +56,7 @@ function stageCover(game, updateGame) {
 
 /** The chase: four stars, a Spider at speed up the avenue, interceptors behind. */
 function stageChase(game, updateGame) {
-  game.timeOfDay = 0.42;
+  game.timeOfDay = 0.58;
   const avenue = avenueX(3);
   const coupe = game.cars[game.cars.length - 1];
   coupe.x = avenue + 18;
@@ -65,10 +65,11 @@ function stageChase(game, updateGame) {
   putPlayerInCar(game, coupe);
   game.wanted.heat = 4;
   game.wanted.lastCrimeLabel = 'Grand theft auto';
-  addCop(game, avenue - 16, streetY(3) + 130, -Math.PI / 2);
-  addCop(game, avenue + 20, streetY(3) + 240, -Math.PI / 2);
-  addCop(game, avenue - 14, streetY(4) - 190, -Math.PI / 2);
-  runSteps(game, 105, scriptedInput(['KeyW']), updateGame);
+  const copA = addCop(game, avenue - 16, streetY(3) + 175, -Math.PI / 2);
+  const copB = addCop(game, avenue + 20, streetY(3) + 300, -Math.PI / 2);
+  const copC = addCop(game, avenue - 14, streetY(4) - 120, -Math.PI / 2);
+  for (const cop of [copA, copB, copC]) cop.vy = -170;
+  runSteps(game, 95, scriptedInput(['KeyW']), updateGame);
   game.mission.banner = 'Shake the Port Solano PD — break their line of sight to cool the heat!';
   game.mission.bannerUntil = game.time + 999;
   snapCamera(game);
@@ -79,12 +80,16 @@ function stageMission(game, updateGame) {
   game.timeOfDay = 0.38;
   game.mission.active = true;
   game.mission.stage = 2; // delivering the Sunset Package
-  const sedan = game.cars.find((car) => car.kind === 'traffic') || game.cars[0];
-  sedan.x = avenueX(1) - 20;
-  sedan.y = streetY(0) + 330;
-  sedan.angle = -Math.PI / 2 + 0.22;
+  const sedan = game.cars.find((car) => car.kind === 'traffic' && car.type.id === 'sedan')
+    || game.cars.find((car) => car.kind === 'traffic')
+    || game.cars[0];
+  sedan.x = avenueX(1) + 18;
+  sedan.y = streetY(0) + 265;
+  sedan.angle = -Math.PI / 2;
+  sedan.vx = 0;
+  sedan.vy = 0;
   putPlayerInCar(game, sedan);
-  runSteps(game, 55, scriptedInput(['KeyW']), updateGame);
+  runSteps(game, 34, scriptedInput(['KeyW']), updateGame);
   game.mission.banner = 'Sunset Package — the drop is Cafe Lumen, north-west. Watch the corners.';
   game.mission.bannerUntil = game.time + 999;
   snapCamera(game);
@@ -92,7 +97,7 @@ function stageMission(game, updateGame) {
 
 /** Downtown on foot at dusk: crowds, traffic and neon on the Marlin Strip. */
 function stageDowntown(game, updateGame) {
-  game.timeOfDay = 0.47;
+  game.timeOfDay = 0.64;
   game.player.x = avenueX(2) + 66;
   game.player.y = streetY(1) + 62;
   game.player.angle = 2.4;
